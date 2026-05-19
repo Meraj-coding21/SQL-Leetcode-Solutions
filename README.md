@@ -1,19 +1,20 @@
 # SQL LeetCode Solutions
+### [LeetCode Top SQL 50](https://leetcode.com/studyplan/top-sql-50/) — Complete Solutions by [Meraj](https://github.com/Meraj-coding21)
 
-A complete collection of my solutions for the [LeetCode Top SQL 50](https://leetcode.com/studyplan/top-sql-50/) study plan, organized by difficulty.
+---
 
-This isn't a polished answer key — it's a personal record of how I actually worked through these problems. Some solutions are clean and optimal. Others are not, and I've noted that where it's the case. The goal was to solve every problem, document my thinking, and build a reference I can come back to.
+A personal record of working through every problem in the SQL 50 study plan. Not a polished answer key but a real log of how I actually solved them, including the messy ones. Some solutions are clean and optimal. Some are not, and I've noted that where it's the case.
 
 ---
 
 ## Progress
 
-| Difficulty | Solved |
-|---|---|
-| Easy | 33 |
-| Medium | 20 |
-| Hard | 1 |
-| **Total** | **54** |
+| Difficulty | Count | Solved | Status |
+|---|:---:|:---:|:---:|
+| 🟢 Easy | 32 | 32 | ✅ Complete |
+| 🟡 Medium | 17 | 17 | ✅ Complete |
+| 🔴 Hard | 1 | 1 | ✅ Complete |
+| **Total** | **50** | **50** | **✅ 100%** |
 
 ---
 
@@ -30,15 +31,15 @@ Solutions are written in **MySQL** or **PostgreSQL** depending on what the probl
 
 ---
 
-## Patterns Encountered
+## Patterns & Techniques
 
-Working through these problems back to back makes patterns emerge that you don't necessarily notice when solving problems in isolation. Here's what came up repeatedly across the 54 solutions.
+Working through these problems back to back makes patterns emerge that you don't notice when solving in isolation. Here's what came up repeatedly across the 50 solutions.
 
 ---
 
 ### Window Functions
 
-The most frequently used tool across this set. `DENSE_RANK()` appears in at least 5 problems — ranking scores, finding the Nth highest salary, top salaries per department, and first-year product sales. `LAG()` and `LEAD()` handle row-to-row comparisons without a self-join (Rising Temperature, Consecutive Numbers). `SUM() OVER(ORDER BY ...)` was the key to the running total in the bus capacity problem.
+The most frequently used tool in this set. `DENSE_RANK()` appears in at least 5 problems — ranking scores, finding the Nth highest salary, top salaries per department, and first-year product sales. `LAG()` and `LEAD()` handle row-to-row comparisons without a self-join. `SUM() OVER(ORDER BY ...)` was the key to the running total in the bus capacity problem.
 
 ```sql
 -- 180. Consecutive Numbers
@@ -69,7 +70,7 @@ WHERE c.cnt_a > 1 AND c.cnt_b = 1;
 
 ### LEFT JOIN as an Anti-Join
 
-Using `LEFT JOIN ... WHERE right_table.id IS NULL` to find rows with no match in another table. This came up in several problems — customers who never ordered, employees whose manager left the company, customers who visited but made no transactions.
+Using `LEFT JOIN ... WHERE right_table.id IS NULL` to find rows with no match in another table. Came up in several problems — customers who never ordered, employees whose manager left, customers who visited but made no transactions.
 
 ```sql
 -- 183. Customer Who Never Ordered
@@ -98,13 +99,13 @@ SELECT (
 ) AS SecondHighestSalary;
 ```
 
-The outer `SELECT` wrapping the subquery is intentional — it returns `NULL` when no second-highest salary exists, rather than returning an empty result set.
+> The outer `SELECT` wrapping the subquery is intentional — it returns `NULL` when no second-highest salary exists, rather than returning an empty result set.
 
 ---
 
 ### UNION / UNION ALL for Multi-Condition Aggregation
 
-`UNION ALL` came up when a value needed to be counted across two different columns in the same table (friend requests — both sender and receiver count as a connection). `UNION` was used in the salary categories problem to assemble fixed output rows for each bucket.
+`UNION ALL` came up when a value needed to be counted across two different columns in the same table. `UNION` was used in the salary categories problem to assemble fixed output rows for each bucket.
 
 ```sql
 -- 602. Friend Requests II
@@ -160,7 +161,7 @@ GROUP BY 1, 2;
 
 ### Correlated Subqueries for Sliding Windows
 
-The 7-day rolling average problem (1321) uses correlated subqueries to calculate the sum and average for each day's window. Not the only way to solve it, but the approach is readable.
+The 7-day rolling average problem (1321) uses correlated subqueries to calculate the sum and average for each day's window.
 
 ```sql
 -- 1321. Restaurant Growth (PostgreSQL)
@@ -180,7 +181,7 @@ ORDER BY visited_on;
 
 ## A Note on Solution Quality
 
-Not every solution here is optimal. A few are explicitly flagged in the file comments — 1661 (Average Time to Process Per Machine) uses three separate correlated subqueries where a single conditional aggregation would have been cleaner. 2356 (Number of Unique Subjects Taught by Each Teacher) uses a double GROUP BY where `COUNT(DISTINCT subject_id)` would have been the direct approach.
+Not every solution here is optimal. A few are explicitly flagged in the file comments — 1661 (Average Time to Process Per Machine) uses three separate correlated subqueries where a single conditional aggregation would have been cleaner. 2356 (Number of Unique Subjects Taught by Each Teacher) uses a double `GROUP BY` where `COUNT(DISTINCT subject_id)` would have been the direct approach.
 
 Those solutions are left as-is. The point of this repo is to document what I actually wrote, not to go back and tidy everything up. The suboptimal ones are part of the record too.
 
@@ -188,5 +189,8 @@ Those solutions are left as-is. The point of this repo is to document what I act
 
 ## Tech
 
-- MySQL and PostgreSQL (problem-dependent)
-- All solutions accepted on LeetCode
+![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=flat&logo=mysql&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-336791?style=flat&logo=postgresql&logoColor=white)
+![LeetCode](https://img.shields.io/badge/LeetCode-FFA116?style=flat&logo=leetcode&logoColor=white)
+
+All 50 solutions accepted on LeetCode.
